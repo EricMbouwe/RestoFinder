@@ -1,8 +1,15 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
+import { COLORS } from '../constants';
 
 const Home = () => {
-  return <Text>Home</Text>;
+  return (
+    <SafeAreaView>
+      <View>
+        <Text>Home page</Text>
+      </View>
+    </SafeAreaView>
+  );
 };
 
 export default Home;
