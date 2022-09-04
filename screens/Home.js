@@ -4,7 +4,7 @@ import { COLORS } from '../constants';
 
 const Home = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View>
         <Text>Home page</Text>
       </View>
