@@ -3,7 +3,12 @@ import { View, Image, Text } from 'react-native';
 
 import { SIZES, FONTS, COLORS, SHADOWS, assets } from '../constants';
 
-export const NFTTitle = ({ title, subTitle, titleSize, subTitleSize }) => {
+export const RestaurantTitle = ({
+  title,
+  subTitle,
+  titleSize,
+  subTitleSize,
+}) => {
   return (
     <View>
       <Text
@@ -22,28 +27,7 @@ export const NFTTitle = ({ title, subTitle, titleSize, subTitleSize }) => {
           color: COLORS.primary,
         }}
       >
-        by {subTitle}
-      </Text>
-    </View>
-  );
-};
-
-export const EthPrice = ({ price }) => {
-  return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-      <Image
-        source={assets.eth}
-        resizeMode="contain"
-        style={{ width: 20, height: 20, marginRight: 2 }}
-      />
-      <Text
-        style={{
-          fontFamily: FONTS.medium,
-          fontSize: SIZES.font,
-          color: COLORS.primary,
-        }}
-      >
-        {price}
+        at {subTitle}
       </Text>
     </View>
   );
@@ -75,7 +59,7 @@ export const People = () => {
   );
 };
 
-export const EndDate = () => {
+export const PriceRating = ({ price }) => {
   return (
     <View
       style={{
@@ -97,7 +81,7 @@ export const EndDate = () => {
           color: COLORS.primary,
         }}
       >
-        Ending in
+        Price Rating
       </Text>
       <Text
         style={{
@@ -106,13 +90,13 @@ export const EndDate = () => {
           color: COLORS.primary,
         }}
       >
-        12h 30m
+        {price}
       </Text>
     </View>
   );
 };
 
-export const SubInfo = () => {
+export const SubInfo = ({ priceRating }) => {
   return (
     <View
       style={{
@@ -124,7 +108,7 @@ export const SubInfo = () => {
       }}
     >
       <People />
-      <EndDate />
+      <PriceRating price={priceRating} />
     </View>
   );
 };

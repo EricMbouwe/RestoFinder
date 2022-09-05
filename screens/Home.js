@@ -1,38 +1,121 @@
-import React, { useState } from 'react';
-import { FlatList, SafeAreaView, View } from 'react-native';
-import { COLORS, NFTData } from '../constants';
+import React, { useCallback, useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Keyboard,
+  SafeAreaView,
+  View,
+  Text,
+  RefreshControl,
+} from 'react-native';
+import { COLORS, SIZES } from '../constants';
 import { HomeHeader, FocusedStatusBar, RestaurantCard } from '../components';
 
 const Home = () => {
-  const [nftData, setNftData] = useState(NFTData);
+  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [notFound, setNotFound] = useState(false);
 
-  const handleSearch = (value) => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const url =
+    'https://dcom-native-interview.s3.amazonaws.com/api/merchant/query';
+
+  const onRefresh = useCallback(async () => {
+    const defaultSearchAddress = '240 Kent Ave, 11249';
+
+    setRefreshing(true);
+    await getRestaurants(defaultSearchAddress);
+    setRefreshing(false);
+  }, []);
+
+  const getRestaurants = async (address) => {
+    const formatedAddress = address
+      .split(/[^A-Za-z0-9]+/)
+      .join('_')
+      .toLowerCase();
+
+    try {
+      const response = await fetch(`${url}/${formatedAddress}`);
+      const json = await response.json();
+      setData(json.merchants);
+      setNotFound(false);
+    } catch (error) {
+      setLoading(false);
+      setData([]);
+      setNotFound(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = async (value) => {
+    setLoading(true);
+    Keyboard.dismiss();
+
     if (value.length === 0) {
-      setNftData(NFTData);
+      setData(data);
+      setLoading(false);
+      return;
     }
 
-    const filteredData = NFTData.filter((item) =>
-      item.name.toLowerCase().includes(value.toLowerCase()),
-    );
-
-    if (filteredData.length === 0) {
-      setNftData(NFTData);
-    } else {
-      setNftData(filteredData);
-    }
+    await getRestaurants(value);
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <FocusedStatusBar background={COLORS.primary} />
+      {isLoading && (
+        <View
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" />
+        </View>
+      )}
+
+      {!isLoading && notFound && (
+        <View
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Text
+            style={{
+              fontSize: SIZES.extraLarge,
+              paddingHorizontal: SIZES.font,
+            }}
+          >
+            It appears we don't have exactly what you're looking for. You can
+            always update or pull to refresh
+          </Text>
+        </View>
+      )}
+
       <View style={{ flex: 1 }}>
         <View style={{ zIndex: 0 }}>
           <FlatList
-            data={nftData}
+            data={data}
             renderItem={({ item }) => <RestaurantCard data={item} />}
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={<HomeHeader onSearch={handleSearch} />}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           />
         </View>
 

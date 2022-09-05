@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, TextInput } from 'react-native';
 
 import { COLORS, FONTS, SIZES, assets } from '../constants';
 import { RectButton } from './Button';
 
 const HomeHeader = ({ onSearch }) => {
+  const [search, setSearch] = useState('');
+
+  const handleSearch = () => {
+    onSearch(search);
+    // setSearch('');
+  };
+
   return (
     <View
       style={{
@@ -19,11 +26,6 @@ const HomeHeader = ({ onSearch }) => {
           alignItems: 'center',
         }}
       >
-        {/* <Image
-          source={assets.logo}
-          resizeMode="contain"
-          style={{ width: 90, height: 25 }}
-        /> */}
         <Text
           style={{
             fontSize: SIZES.extraLarge,
@@ -80,7 +82,6 @@ const HomeHeader = ({ onSearch }) => {
       <View style={{ flexDirection: 'row', marginTop: SIZES.font }}>
         <View
           style={{
-            // width: '100%',
             flex: 1,
             marginRight: SIZES.base,
             borderRadius: SIZES.font,
@@ -99,14 +100,15 @@ const HomeHeader = ({ onSearch }) => {
           <TextInput
             placeholder="Street Address, City, State"
             style={{ flex: 1 }}
-            onChangeText={onSearch}
+            value={search}
+            onChangeText={(text) => setSearch(text)}
           />
         </View>
 
         <RectButton
           minWidth={120}
           fontSize={SIZES.font}
-          handlePress={() => navigation.navigate('Details', { data })}
+          handlePress={handleSearch}
           name={'Search'}
           backgroundColor={COLORS.secondary}
         />

@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { COLORS, SIZES, SHADOWS, assets } from '../constants';
 
-import { SubInfo, EthPrice, NFTTitle } from './SubInfo';
+import { SubInfo, RestaurantTitle } from './SubInfo';
 import { RectButton, CircleButton } from './Button';
 
 const RestaurantCard = ({ data }) => {
@@ -26,7 +26,7 @@ const RestaurantCard = ({ data }) => {
         }}
       >
         <Image
-          source={data.image}
+          source={data.logo_url}
           resizeMode="cover"
           style={{
             width: '100%',
@@ -39,12 +39,12 @@ const RestaurantCard = ({ data }) => {
         <CircleButton imgUrl={assets.heart} right={10} top={10} />
       </View>
 
-      <SubInfo />
+      <SubInfo priceRating={data.price_rating} />
 
       <View style={{ width: '100%', padding: SIZES.font }}>
-        <NFTTitle
+        <RestaurantTitle
           title={data.name}
-          subTitle={data.creator}
+          subTitle={data.location.street}
           titleSize={SIZES.large}
           subTitleSize={SIZES.small}
         />
@@ -53,11 +53,10 @@ const RestaurantCard = ({ data }) => {
           style={{
             marginTop: SIZES.font,
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-end',
             alignItems: 'center',
           }}
         >
-          <EthPrice price={data.price} />
           <RectButton
             minWidth={120}
             fontSize={SIZES.font}
