@@ -28,13 +28,19 @@ export const CircleButton = ({ imgUrl, handlePress, ...props }) => {
   );
 };
 
-export const RectButton = ({ minWidth, fontSize, handlePress, ...props }) => {
+export const RectButton = ({
+  minWidth,
+  fontSize,
+  handlePress,
+  name,
+  ...props
+}) => {
   return (
     <TouchableOpacity
       style={{
-        backgroundColor: COLORS.primary,
+        // backgroundColor: COLORS.primary,
         padding: SIZES.small,
-        borderRadius: SIZES.extraLarge,
+        borderRadius: SIZES.font,
         minWidth: minWidth,
         ...props,
       }}
@@ -48,7 +54,7 @@ export const RectButton = ({ minWidth, fontSize, handlePress, ...props }) => {
           textAlign: 'center',
         }}
       >
-        See More
+        {name}
       </Text>
     </TouchableOpacity>
   );

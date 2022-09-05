@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TextInput } from 'react-native';
 
 import { COLORS, FONTS, SIZES, assets } from '../constants';
+import { RectButton } from './Button';
 
 const HomeHeader = ({ onSearch }) => {
   return (
@@ -18,11 +19,20 @@ const HomeHeader = ({ onSearch }) => {
           alignItems: 'center',
         }}
       >
-        <Image
+        {/* <Image
           source={assets.logo}
           resizeMode="contain"
           style={{ width: 90, height: 25 }}
-        />
+        /> */}
+        <Text
+          style={{
+            fontSize: SIZES.extraLarge,
+            fontWeight: '900',
+            color: COLORS.white,
+          }}
+        >
+          RestoFinder
+        </Text>
 
         <View style={{ width: 45, height: 45 }}>
           <Image
@@ -52,7 +62,7 @@ const HomeHeader = ({ onSearch }) => {
             color: COLORS.white,
           }}
         >
-          Hello Victoria 👋
+          Hello Visitor 👋
         </Text>
 
         <Text
@@ -63,14 +73,16 @@ const HomeHeader = ({ onSearch }) => {
             marginTop: SIZES.base / 2,
           }}
         >
-          Let’s find masterpiece Art
+          Let’s find restaurants
         </Text>
       </View>
 
-      <View style={{ marginTop: SIZES.font }}>
+      <View style={{ flexDirection: 'row', marginTop: SIZES.font }}>
         <View
           style={{
-            width: '100%',
+            // width: '100%',
+            flex: 1,
+            marginRight: SIZES.base,
             borderRadius: SIZES.font,
             backgroundColor: COLORS.gray,
             flexDirection: 'row',
@@ -85,11 +97,19 @@ const HomeHeader = ({ onSearch }) => {
             style={{ width: 20, height: 20, marginRight: SIZES.base }}
           />
           <TextInput
-            placeholder="Search NFTs"
+            placeholder="Street Address, City, State"
             style={{ flex: 1 }}
             onChangeText={onSearch}
           />
         </View>
+
+        <RectButton
+          minWidth={120}
+          fontSize={SIZES.font}
+          handlePress={() => navigation.navigate('Details', { data })}
+          name={'Search'}
+          backgroundColor={COLORS.secondary}
+        />
       </View>
     </View>
   );

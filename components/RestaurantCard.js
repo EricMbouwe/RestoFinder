@@ -62,6 +62,8 @@ const RestaurantCard = ({ data }) => {
             minWidth={120}
             fontSize={SIZES.font}
             handlePress={() => navigation.navigate('Details', { data })}
+            name={'See More'}
+            backgroundColor={COLORS.primary}
           />
         </View>
       </View>
