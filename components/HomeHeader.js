@@ -110,7 +110,9 @@ const HomeHeader = ({ onSearch }) => {
           fontSize={SIZES.font}
           handlePress={handleSearch}
           name={'Search'}
-          backgroundColor={COLORS.secondary}
+          backgroundColor={COLORS.primary}
+          borderWidth={2}
+          borderColor={'white'}
         />
       </View>
     </View>
