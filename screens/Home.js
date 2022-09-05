@@ -22,10 +22,20 @@ const Home = () => {
     'https://dcom-native-interview.s3.amazonaws.com/api/merchant/query';
 
   const onRefresh = useCallback(async () => {
-    const defaultSearchAddress = '240 Kent Ave, 11249';
+    const defaultSearchAddresses = [
+      '55 Water St, 10041',
+      '240 Kent Ave, 11249',
+      '232 Willow Ave, 07030',
+      '245 E 63rd St, 10065',
+    ];
+
+    const address =
+      defaultSearchAddresses[
+        Math.floor(Math.random() * defaultSearchAddresses.length)
+      ];
 
     setRefreshing(true);
-    await getRestaurants(defaultSearchAddress);
+    await getRestaurants(address);
     setRefreshing(false);
   }, []);
 
@@ -50,8 +60,8 @@ const Home = () => {
   };
 
   const handleSearch = async (value) => {
-    setLoading(true);
     Keyboard.dismiss();
+    setLoading(true);
 
     if (value.length === 0) {
       setData(data);

@@ -26,7 +26,8 @@ const RestaurantCard = ({ data }) => {
         }}
       >
         <Image
-          source={data.logo_url}
+          // source={data.logo_url}
+          source={assets.resto}
           resizeMode="cover"
           style={{
             width: '100%',

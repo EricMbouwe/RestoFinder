@@ -42,6 +42,7 @@ const ImageCmp = ({ imgUrl, index }) => {
         width: 48,
         height: 48,
         marginLeft: index === 0 ? 0 : -SIZES.font,
+        borderRadius: SIZES.extraLarge,
       }}
     />
   );
@@ -50,11 +51,9 @@ const ImageCmp = ({ imgUrl, index }) => {
 export const People = () => {
   return (
     <View style={{ flexDirection: 'row' }}>
-      {[assets.person02, assets.person03, assets.person04].map(
-        (imgUrl, index) => (
-          <ImageCmp imgUrl={imgUrl} index={index} key={`People-${index}`} />
-        ),
-      )}
+      {[assets.resto, assets.resto, assets.resto].map((imgUrl, index) => (
+        <ImageCmp imgUrl={imgUrl} index={index} key={`People-${index}`} />
+      ))}
     </View>
   );
 };
